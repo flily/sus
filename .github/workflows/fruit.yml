@@ -24,4 +24,4 @@ jobs:
     - name: Run all
       run: python3 main.py
       env:
-        FEISHU_WEB_HOOK_ID: ${{FEISHU_WEB_HOOK_ID}}
+        FEISHU_WEB_HOOK_ID: ${{secrets.FEISHU_WEB_HOOK_ID}}
