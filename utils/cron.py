@@ -144,7 +144,6 @@ class CronItem(object):
             self.dow.match((t.weekday() + 1) % 7)
         ]
 
-        print(matched_fields)
         return all(matched_fields)
 
 

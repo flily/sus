@@ -6,8 +6,9 @@ import inspect
 import os
 import sys
 import traceback
+from datetime import datetime
 
-from jobs.base import JobBase
+from jobs.base import JobBase, JobException
 
 WEB_HOOK_ID_ENV_NAME = "FEISHU_WEB_HOOK_ID"
 
@@ -67,16 +68,29 @@ def main():
         return
     
     dry_run = is_dry_run()
+    now = datetime.now()
+    print("start SUS jobs at {0}".format(now.isoformat()))
     args = sys.argv[1:]
     for filename, name, module in load_all_modules():
         try:
-            print("load module {0} from {1}: {2}".format(name, filename, module))
             m = module(web_hook_id)
+            print("+ load module <{0}> from {1}".format(name, filename))
+
+            print("  - dry run: {0}".format(dry_run))
             m.dry_run = dry_run
+
+            if not m.is_scheduled(now):
+                print("  - not scheduled to run now")
+                continue
+
+            print("  - run with args: {0}".format(args))
             m.run(args)
 
+        except JobException as ex:
+            print("  > error: {0}".format(ex))
+
         except Exception as ex:
-            print("Error: {0}".format(ex))
+            print("  > error: {0}".format(ex))
             print("%s" % traceback.format_exc())
 
 

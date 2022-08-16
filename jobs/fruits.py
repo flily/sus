@@ -11,6 +11,8 @@ class Fruit(JobBase):
     """
     Fruit-time reminder
     """
+    cron = "50 7 * * 1-5"
+
     def run(self, args):
         title = "[%s] 生产环境上线通知" % datetime.now().strftime("%Y-%m-%d")
         m = {
