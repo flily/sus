@@ -1,4 +1,4 @@
-name: CI
+name: SUS Jobs
 
 on:
   workflow_dispatch:
