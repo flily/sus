@@ -4,7 +4,7 @@
 
 from datetime import datetime
 
-from jobs.base import JobBase
+from base.base import JobBase
 
 
 class Fruit(JobBase):

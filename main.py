@@ -8,7 +8,7 @@ import sys
 import traceback
 from datetime import datetime
 
-from jobs.base import JobBase, JobException
+from base.base import JobBase, JobException
 
 WEB_HOOK_ID_ENV_NAME = "FEISHU_WEB_HOOK_ID"
 
