@@ -51,6 +51,25 @@ def load_web_hook_id() -> str:
     return id or ""
 
 
+def load_adjust_minutes() -> int:
+    """
+    Adjust minutes for delay of jobs.
+    """
+    value = os.environ.get("ADJUST_MINUTES", "0")
+    m = 0
+
+    try:
+        if not value:
+            m = 0
+        else:
+            m = int(value)
+
+    except ValueError:
+        print("> ADJUST_MINUTES is not a number, use 0 default")
+
+    return m
+
+
 def is_dry_run() -> bool:
     """
     load DRY_RUN from environment variable.
@@ -62,14 +81,20 @@ def main():
     """
     Main entry
     """
+    print("+ load FEISHU web hook ID")
     web_hook_id = load_web_hook_id()
     if not web_hook_id:
-        print("FEISHU web hook ID is not set")
+        print("> FEISHU web hook ID is not set")
         return
-    
+    print("  - web hook ID loaded: {}".format("*" * len(web_hook_id)))
+
+    adjust_minutes = load_adjust_minutes()
+    if adjust_minutes != 0:
+        print("+ adjust minutes: {}".format(adjust_minutes))
+
     dry_run = is_dry_run()
     now = datetime.now()
-    print("start SUS jobs at {0}".format(now.isoformat()))
+    print("+ start SUS jobs at {0}".format(now.isoformat()))
     args = sys.argv[1:]
     for filename, name, module in load_all_modules():
         try:
@@ -79,7 +104,7 @@ def main():
             print("  - dry run: {0}".format(dry_run))
             m.dry_run = dry_run
 
-            if not m.is_scheduled(now):
+            if not m.is_scheduled(now, adjust_minutes=adjust_minutes):
                 print("  - not scheduled to run now")
                 continue
 

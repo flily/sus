@@ -34,7 +34,7 @@ class JobBase(object):
 
         for m in range(adjust_minutes):
             t = now - datetime.timedelta(minutes=m)
-            if item.is_scheduled(t):
+            if item.match(t):
                 return True
 
         return False
