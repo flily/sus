@@ -6,8 +6,8 @@ on:
     - cron: '50 7 * * 1-5'
 
 jobs:
-  fruit-time:
-    name: Fruit-time reminder
+  launcher:
+    name: SUS jobs launcher
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -21,7 +21,7 @@ jobs:
     - name: Set up dependencies
       run: pip install -r requirements.txt
 
-    - name: Run all
+    - name: Run all jobs
       run: python3 main.py
       env:
         FEISHU_WEB_HOOK_ID: ${{secrets.FEISHU_WEB_HOOK_ID}}

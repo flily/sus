@@ -3,6 +3,7 @@
 
 
 import abc
+import datetime
 
 import requests
 
@@ -28,9 +29,16 @@ class JobBase(object):
     def run(self, args):
         pass
 
-    def is_scheduled(self, now):
+    def is_scheduled(self, now, adjust_minutes=5) -> bool:
         item = cron_parse(self.cron)
-        return item.match(now)
+
+        for m in range(adjust_minutes):
+            t = now - datetime.timedelta(minutes=m)
+            if item.is_scheduled(t):
+                return True
+
+        return False
+
 
     def send_message(self, message):
         url = self._get_web_hook_url()
