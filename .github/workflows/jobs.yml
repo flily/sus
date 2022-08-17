@@ -26,3 +26,4 @@ jobs:
       run: python3 main.py
       env:
         FEISHU_WEB_HOOK_ID: ${{secrets.FEISHU_WEB_HOOK_ID}}
+        ADJUST_MINUTES: 5
