@@ -13,6 +13,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Check schedule context
+      run: |
+        echo "cron = ${{ github.event.schedule }}"
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
