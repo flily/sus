@@ -14,7 +14,7 @@ class Fruit(JobBase):
     cron = "50 7 * * 1-5"
 
     def run(self, args):
-        title = "[%s] 生产环境上线通知" % datetime.now().strftime("%Y-%m-%d")
+        title = "[%s] 水果时间通知" % datetime.now().strftime("%Y-%m-%d")
         m = {
             "msg_type": "post",
             "content": {
