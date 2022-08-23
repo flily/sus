@@ -2,9 +2,9 @@ name: SUS Jobs
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '50 7 * * 1-5'
-    - cron: '40 3 * * 1-5'
+  # schedule:
+    # - cron: '50 7 * * 1-5'
+    # - cron: '40 3 * * 1-5'
 
 jobs:
   launcher:
